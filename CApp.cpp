@@ -28,20 +28,21 @@ void CApp::run()
 			system("CLS");
 			if (m_pGame->m_game_state == GAME_STATE::WINNER_O)
 			{
-				std::cout << "Player O has Won the game";
+				std::cout << "Player O has Won the game\n";
 				keepRunning = false;
 			}
 			else if (m_pGame->m_game_state == GAME_STATE::WINNER_X)
 			{
-				std::cout << "Player X has Won the game";
+				std::cout << "Player X has Won the game\n";
 				keepRunning = false;
 			}
 			else if (m_pGame->m_game_state == GAME_STATE::WINNER_NONE)
 			{
-				std::cout << "Game has been delcared a Draw";
+				std::cout << "Game has been delcared a Draw\n";
 				keepRunning = false;
 			}
 		}
 
 	}
+	system("PAUSE");
 }
