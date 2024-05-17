@@ -27,7 +27,7 @@ private:
 	bool input();
 	bool isSpotTaken(int choice);
 
-	bool isGameWon();
+	const bool isGameWon();
 	void isGameDraw();
 	bool checkWinpattern(char playerChar);
 public:
@@ -36,9 +36,5 @@ public:
 
 	void run();
 
-	bool isGameOver();
-
-	void setGameState(GAME_STATE state) { m_game_state == state; }
-
+	const bool isGameOver();
 };
-

@@ -17,10 +17,6 @@ CGame::~CGame()
 void CGame::draw()
 {
 	system("CLS");
-	int tempVal = 1;
-
-	gotoxy(0, 0);
-
 	for (unsigned int i = 0; i < m_boardMAXSIZE; i++)
 	{
 		if (i % 3 == 0)
@@ -74,7 +70,7 @@ bool CGame::isSpotTaken(int choice)
 	return false ;
 }
 
-bool CGame::isGameWon()
+const bool CGame::isGameWon()
 {
 	if (checkWinpattern('X'))
 	{
@@ -133,7 +129,7 @@ void CGame::run()
 		isGameDraw();
 }
 
-bool CGame::isGameOver()
+const bool CGame::isGameOver()
 {
 	switch (m_game_state)
 	{
