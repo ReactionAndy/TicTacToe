@@ -32,6 +32,8 @@ public:
 	void isGameDraw();
 	bool checkWinpattern(char playerChar);
 
+	bool isGameOver();
+
 	GAME_STATE m_game_state;
 };
 

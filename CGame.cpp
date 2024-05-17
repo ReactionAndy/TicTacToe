@@ -54,24 +54,18 @@ bool CGame::input()
 
 void CGame::draw()
 {
-	int x = 1, y = 1;
 	system("CLS");
-	std::cout << "XXXXX\n";
-	std::cout << "X   X\n";
-	std::cout << "X   X\n";
-	std::cout << "X   X\n";
-	std::cout << "XXXXX\n";
-	for (size_t i = 0; i < m_boardMAXSIZE; i++)
+	int tempVal = 1;
+
+	gotoxy(0, 0);
+
+	for (unsigned int i = 0; i < m_boardMAXSIZE; i++)
 	{
-		gotoxy(x, y);
-		std::cout << m_board[i];
-		x++;
-		if ((i + 1) % (3 * y) == 0)
+		if (i % 3 == 0)
 		{
-			y++;
-			x = 1;
-			//std::cout << "Y++" << i << '\n';
+			std::cout << std::endl;
 		}
+		std::cout << m_board[i];
 	}
 	gotoxy(0, 6);
 }
@@ -133,6 +127,37 @@ bool CGame::checkWinpattern(char playerChar)
 		return true;
 	else if (m_board[2] == playerChar && m_board[4] == playerChar && m_board[6] == playerChar)
 		return true;
+	return false;
+}
+
+bool CGame::isGameOver()
+{
+	switch (m_game_state)
+	{
+	case NONE:
+		return false;
+		break;
+	case WINNER_X:
+		system("CLS");
+		std::cout << "Player X has Won the game\n";
+		return true;
+		break;
+	case WINNER_O:
+		system("CLS");
+		std::cout << "Player O has Won the game\n";
+		return true;
+		break;
+	case WINNER_NONE:
+		system("CLS");
+		std::cout << "Game has been delcared a Draw\n";
+		return true;
+		break;
+	case DEBUG:
+		break;
+	default:
+		return  false;
+		break;
+	}
 	return false;
 }
 
