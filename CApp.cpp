@@ -13,7 +13,6 @@ CApp::~CApp()
 
 void CApp::run()
 {
-	m_pGame->draw();
 	while (!m_pGame->isGameOver())
 	{
 		if (GetAsyncKeyState(VK_ESCAPE))

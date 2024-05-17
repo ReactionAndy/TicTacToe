@@ -14,21 +14,34 @@ CGame::~CGame()
 {
 }
 
-void CGame::run()
+void CGame::draw()
 {
-	input();
-	if (!isGameWon())
-		isGameDraw();
-	draw();
+	system("CLS");
+	int tempVal = 1;
+
+	gotoxy(0, 0);
+
+	for (unsigned int i = 0; i < m_boardMAXSIZE; i++)
+	{
+		if (i % 3 == 0)
+		{
+			std::cout << std::endl;
+		}
+		std::cout << m_board[i];
+	}
+	gotoxy(0, 6);
 }
 
 bool CGame::input()
 {
-	std::cout << "Choice (1-9):";
+	std::cout << "Choice (1-9) (0 = exit):";
 	int choice;
 	std::cin >> choice;
 	switch (choice)
 	{
+	case 0:
+		m_game_state = GAME_STATE::FORCE_QUIT;
+		break;
 	case 1:
 	case 2:
 	case 3:
@@ -50,24 +63,6 @@ bool CGame::input()
 		break;
 	}
 	return false;
-}
-
-void CGame::draw()
-{
-	system("CLS");
-	int tempVal = 1;
-
-	gotoxy(0, 0);
-
-	for (unsigned int i = 0; i < m_boardMAXSIZE; i++)
-	{
-		if (i % 3 == 0)
-		{
-			std::cout << std::endl;
-		}
-		std::cout << m_board[i];
-	}
-	gotoxy(0, 6);
 }
 
 bool CGame::isSpotTaken(int choice)
@@ -130,6 +125,14 @@ bool CGame::checkWinpattern(char playerChar)
 	return false;
 }
 
+void CGame::run()
+{
+	draw();
+	input();
+	if (!isGameWon())
+		isGameDraw();
+}
+
 bool CGame::isGameOver()
 {
 	switch (m_game_state)
@@ -153,6 +156,11 @@ bool CGame::isGameOver()
 		return true;
 		break;
 	case DEBUG:
+		break;
+	case FORCE_QUIT:
+		system("CLS");
+		std::cout << "FORCE EXITED GAME\n";
+		return true;
 		break;
 	default:
 		return  false;

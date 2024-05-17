@@ -11,6 +11,7 @@ enum GAME_STATE
 	WINNER_O,
 	WINNER_NONE,
 	DEBUG,
+	FORCE_QUIT,
 };
 
 class CGame
@@ -19,21 +20,25 @@ private:
 	static const int m_boardMAXSIZE = 9;
 	char m_board[9];
 	CPlayer m_player;
-public:
-	CGame();
-	~CGame();
+	GAME_STATE m_game_state;
 
-	void run();
-	bool input();
 	void draw();
+
+	bool input();
 	bool isSpotTaken(int choice);
 
 	bool isGameWon();
 	void isGameDraw();
 	bool checkWinpattern(char playerChar);
+public:
+	CGame();
+	~CGame();
+
+	void run();
 
 	bool isGameOver();
 
-	GAME_STATE m_game_state;
+	void setGameState(GAME_STATE state) { m_game_state == state; }
+
 };
 
