@@ -7,3 +7,7 @@ CMenu::CMenu()
 CMenu::~CMenu()
 {
 }
+
+void CMenu::run()
+{
+}

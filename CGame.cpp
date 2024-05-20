@@ -128,7 +128,6 @@ bool CGame::checkWinpattern(char playerChar)
 
 void CGame::run()
 {
-	m_pApp->test();
 	draw();
 	input();
 	if (!isGameWon())

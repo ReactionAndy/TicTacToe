@@ -5,5 +5,7 @@ private:
 public:
 	CMenu();
 	~CMenu();
+
+	void run();
 };
 

@@ -11,17 +11,15 @@ CApp::~CApp()
 {
 	std::cout << "DESTROYING APP\n";
 	delete m_pGame;
-	m_pGame = 0;
+	m_pGame = NULL;
+	
+	delete m_pMenu;
+	m_pMenu = NULL;
 }
 
 void CApp::pauseGame()
 {
 	m_isPaused = true;
-}
-
-void CApp::test()
-{
-	std::cout << "App\n";
 }
 
 void CApp::run()
