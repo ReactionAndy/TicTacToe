@@ -1,8 +1,7 @@
 #pragma once
 #include "CPlayer.h"
-#include <Windows.h>
-#include <iostream>
 #include <vector>
+#include "CApp.h"
 
 enum GAME_STATE
 {
@@ -14,9 +13,13 @@ enum GAME_STATE
 	FORCE_QUIT,
 };
 
+class CApp;
+
 class CGame
 {
 private:
+	CApp* m_pApp;
+
 	static const int m_boardMAXSIZE = 9;
 	char m_board[9];
 	CPlayer m_player;
@@ -31,7 +34,7 @@ private:
 	void isGameDraw();
 	bool checkWinpattern(char playerChar);
 public:
-	CGame();
+	CGame(CApp* pApp);
 	~CGame();
 
 	void run();

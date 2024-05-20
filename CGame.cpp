@@ -2,16 +2,18 @@
 #include <iostream>
 #include "helper.h"
 
-CGame::CGame() : m_player(true), m_game_state(GAME_STATE::NONE),
+CGame::CGame(CApp* pApp) : m_pApp(pApp), m_player(true), m_game_state(GAME_STATE::NONE),
 	m_board{
 	'.', '.', '.', 
 	'.', '.', '.', 
 	'.', '.', '.' }
 {
+	std::cout << "GAME CREATED\n";
 }
 
 CGame::~CGame()
 {
+	std::cout << "GAME DESTROYED\n";
 }
 
 void CGame::draw()
@@ -30,7 +32,7 @@ void CGame::draw()
 
 bool CGame::input()
 {
-	std::cout << "Choice (1-9) (0 = exit):";
+	std::cout << "Choice (1-9) (0 = exit) (10 = pause):";
 	int choice;
 	std::cin >> choice;
 	switch (choice)
@@ -53,6 +55,9 @@ bool CGame::input()
 			m_player.switchPlayer();
 			return true;
 		}
+		break;
+	case 10:
+		m_pApp->pauseGame();
 		break;
 	default:
 		return false;
@@ -123,6 +128,7 @@ bool CGame::checkWinpattern(char playerChar)
 
 void CGame::run()
 {
+	m_pApp->test();
 	draw();
 	input();
 	if (!isGameWon())
