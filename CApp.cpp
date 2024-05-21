@@ -34,7 +34,6 @@ void CApp::run()
 	while (m_isRunning)
 	{
 		m_pGame->run();
-		system("PAUSE");
 		switch (m_menu.run())
 		{
 		case MENU_CHOICE::RESUME:
@@ -47,6 +46,8 @@ void CApp::run()
 			forceQuit();
 			break;
 		default:
+			std::cout << "MENU CHOICE NOT FOUND\n";
+			system("PAUSE");
 			break;
 		}
 	}

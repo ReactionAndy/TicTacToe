@@ -25,6 +25,7 @@ void CGame::resumeGame()
 void CGame::draw()
 {
 	system("CLS");
+	std::cout << "Current Player: " << m_player.getChar();
 	for (unsigned int i = 0; i < m_boardMAXSIZE; i++)
 	{
 		if (i % 3 == 0)
@@ -38,14 +39,11 @@ void CGame::draw()
 
 bool CGame::input()
 {
-	std::cout << "Choice (1-9) (0 = exit) (10 = pause):";
+	std::cout << "Choice (1-9) (10 = pause):";
 	int choice;
 	std::cin >> choice;
 	switch (choice)
 	{
-	case 0:
-		m_game_state = GAME_STATE::FORCE_QUIT;
-		break;
 	case 1:
 	case 2:
 	case 3:
@@ -149,16 +147,19 @@ const bool CGame::isGameOver()
 	case WINNER_X:
 		system("CLS");
 		std::cout << "Player X has Won the game\n";
+		system("PAUSE");
 		return true;
 		break;
 	case WINNER_O:
 		system("CLS");
 		std::cout << "Player O has Won the game\n";
+		system("PAUSE");
 		return true;
 		break;
 	case WINNER_NONE:
 		system("CLS");
 		std::cout << "Game has been delcared a Draw\n";
+		system("PAUSE");
 		return true;
 		break;
 	case DEBUG:
