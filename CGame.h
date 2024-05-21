@@ -3,6 +3,8 @@
 #include <vector>
 #include "CApp.h"
 
+class CApp; // Forward declaration
+
 enum GAME_STATE
 {
 	NONE,
@@ -12,8 +14,6 @@ enum GAME_STATE
 	DEBUG,
 	FORCE_QUIT,
 };
-
-class CApp;
 
 class CGame
 {
@@ -30,8 +30,7 @@ private:
 	bool input();
 	bool isSpotTaken(int choice);
 
-	const bool isGameWon();
-	void isGameDraw();
+	const bool update();
 	bool checkWinpattern(char playerChar);
 public:
 	CGame(CApp* pApp);

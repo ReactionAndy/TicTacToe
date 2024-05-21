@@ -9,6 +9,7 @@ CGame::CGame(CApp* pApp) : m_pApp(pApp), m_player(true), m_game_state(GAME_STATE
 	'.', '.', '.' }
 {
 	std::cout << "GAME CREATED\n";
+	m_game_state = GAME_STATE::NONE;
 }
 
 CGame::~CGame()
@@ -56,9 +57,6 @@ bool CGame::input()
 			return true;
 		}
 		break;
-	case 10:
-		m_pApp->pauseGame();
-		break;
 	default:
 		return false;
 		break;
@@ -75,7 +73,7 @@ bool CGame::isSpotTaken(int choice)
 	return false ;
 }
 
-const bool CGame::isGameWon()
+const bool CGame::update()
 {
 	if (checkWinpattern('X'))
 	{
@@ -89,18 +87,14 @@ const bool CGame::isGameWon()
 		std::cout << "GAME WON [O]";
 		return true;
 	}
-	return false;
-}
-
-void CGame::isGameDraw()
-{
-	for (size_t i = 0; i < m_boardMAXSIZE; i++)
+	for (size_t i = 0; i < m_boardMAXSIZE; i++) // Draw
 	{
 		if (m_board[i] == '.')
-			return;
+			return false;
 	}
 	std::cout << "GAME DRAW";
 	m_game_state = GAME_STATE::WINNER_NONE;
+	return true;
 }
 
 bool CGame::checkWinpattern(char playerChar)
@@ -128,10 +122,12 @@ bool CGame::checkWinpattern(char playerChar)
 
 void CGame::run()
 {
-	draw();
-	input();
-	if (!isGameWon())
-		isGameDraw();
+	while (!isGameOver())
+	{
+		draw();
+		input();
+		update();
+	}
 }
 
 const bool CGame::isGameOver()
@@ -161,6 +157,7 @@ const bool CGame::isGameOver()
 	case FORCE_QUIT:
 		system("CLS");
 		std::cout << "FORCE EXITED GAME\n";
+		m_pApp->forceQuit();
 		return true;
 		break;
 	default:

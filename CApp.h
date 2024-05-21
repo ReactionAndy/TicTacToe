@@ -2,26 +2,25 @@
 #include "CGame.h"
 #include "CMenu.h"
 
-class CGame;
+class CGame; // Forward declaration
 
 class CApp
 {
 private:
-	CGame* m_pGame;
 	CApp* m_pApp;
-	CMenu* m_pMenu;
+	CGame* m_pGame;
+	CMenu m_menu;
 
-	bool m_isPaused;
+	bool m_isRunning;
 public:
 	CApp();
 	~CApp();
 
-	void pauseGame();
+	void passApp(CApp& app) { m_pApp = &app; }
 
-	void passApp(CApp& App) { m_pApp = &App; } // passing app reference into class
+	void forceQuit();
 
-	void test();
+	void restartGame();
 
 	void run();
 };
-

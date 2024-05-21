@@ -2,7 +2,7 @@
 #include <iostream>
 #include <Windows.h>
 
-CApp::CApp() : m_pGame(NULL), m_pApp(NULL), m_isPaused(false)
+CApp::CApp() : m_pGame(NULL), m_pApp(NULL), m_isRunning(true)
 {
 	std::cout << "CREATING APP\n";
 }
@@ -12,32 +12,43 @@ CApp::~CApp()
 	std::cout << "DESTROYING APP\n";
 	delete m_pGame;
 	m_pGame = NULL;
-	
-	delete m_pMenu;
-	m_pMenu = NULL;
 }
 
-void CApp::pauseGame()
+void CApp::forceQuit()
 {
-	m_isPaused = true;
+	std::cout << "FORCE QUITTING APP\n";
+	m_isRunning = false;
+}
+
+void CApp::restartGame()
+{
+	delete m_pGame;
+	m_pGame = 0;
+	m_pGame = new CGame(m_pApp);
 }
 
 void CApp::run()
 {
 	m_pGame = new CGame(m_pApp);
-	while (true)
+	while (m_isRunning)
 	{
-		while (!m_pGame->isGameOver() && m_isPaused == false)
+		m_pGame->run();
+		switch (m_menu.run())
 		{
-			m_pGame->run();
-		}
-		m_isPaused = true;
-		while (m_isPaused)
-		{
-
+		case MENU_CHOICE::RESUME:
+			if (m_pGame->isGameOver())
+				restartGame();
+			break;
+		case MENU_CHOICE::RESTART:
+			restartGame();
+			m_isRunning = true;
+			break;
+		case MENU_CHOICE::EXIT:
+			forceQuit();
+			break;
+		default:
+			break;
 		}
 	}
-
-
 	system("PAUSE");
 }
