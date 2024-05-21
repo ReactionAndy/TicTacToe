@@ -25,6 +25,7 @@ void CApp::restartGame()
 	delete m_pGame;
 	m_pGame = 0;
 	m_pGame = new CGame(m_pApp);
+	m_isRunning = true;
 }
 
 void CApp::run()
@@ -33,15 +34,14 @@ void CApp::run()
 	while (m_isRunning)
 	{
 		m_pGame->run();
+		system("PAUSE");
 		switch (m_menu.run())
 		{
 		case MENU_CHOICE::RESUME:
-			if (m_pGame->isGameOver())
-				restartGame();
+			m_pGame->resumeGame();
 			break;
 		case MENU_CHOICE::RESTART:
 			restartGame();
-			m_isRunning = true;
 			break;
 		case MENU_CHOICE::EXIT:
 			forceQuit();

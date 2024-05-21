@@ -17,6 +17,11 @@ CGame::~CGame()
 	std::cout << "GAME DESTROYED\n";
 }
 
+void CGame::resumeGame()
+{
+	m_game_state = GAME_STATE::NONE;
+}
+
 void CGame::draw()
 {
 	system("CLS");
@@ -56,6 +61,10 @@ bool CGame::input()
 			m_player.switchPlayer();
 			return true;
 		}
+		break;
+	case 10:
+		m_game_state = GAME_STATE::PAUSE;
+		return true;
 		break;
 	default:
 		return false;
@@ -160,6 +169,10 @@ const bool CGame::isGameOver()
 		m_pApp->forceQuit();
 		return true;
 		break;
+	case PAUSE:
+		system("CLS");
+		std::cout << "PAUSED GAME\n";
+		return true;
 	default:
 		return  false;
 		break;

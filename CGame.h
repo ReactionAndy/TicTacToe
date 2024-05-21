@@ -13,6 +13,7 @@ enum GAME_STATE
 	WINNER_NONE,
 	DEBUG,
 	FORCE_QUIT,
+	PAUSE,
 };
 
 class CGame
@@ -35,6 +36,8 @@ private:
 public:
 	CGame(CApp* pApp);
 	~CGame();
+
+	void resumeGame();
 
 	void run();
 
