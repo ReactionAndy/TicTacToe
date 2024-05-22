@@ -1,4 +1,43 @@
 #pragma once
+#include <vector>
+#include "CApp.h"
+#include "IEntity.h"
+class CApp; // Forward declaration
+
+class CGame
+{
+public:
+	CGame(CApp* pApp);
+	~CGame();
+
+	void checkMouseInput(sf::Vector2i mouse_pos);
+
+	void run();
+
+	bool isGameWon();
+
+private:
+	CApp* m_pApp;
+
+	int m_board[3][3];
+
+	std::vector<IEntity*> m_pEntities;
+
+	IEntity* createEntity(const ENTITY_TYPE Entity_Type, const sf::Vector2f pos, const sf::Vector2f size);
+
+	int isBoxClicked(sf::Vector2i mouse_pos);
+	bool isBoxTaken(int index);
+	void switchBox(int index);
+
+	void destroyLastElement();
+
+	bool m_playerIsX;
+	void switchPlayer() { m_playerIsX = !m_playerIsX; }
+
+	bool didPlayerThisWin(int x);
+};
+
+/*#pragma once
 #include "CPlayer.h"
 #include <vector>
 #include "CApp.h"
@@ -43,3 +82,4 @@ public:
 
 	const bool isGameOver();
 };
+*/

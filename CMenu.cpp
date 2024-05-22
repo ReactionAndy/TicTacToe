@@ -1,4 +1,4 @@
-#include "CMenu.h"
+/*#include "CMenu.h"
 #include <iostream>
 
 void CMenu::draw()
@@ -48,3 +48,4 @@ MENU_CHOICE CMenu::run()
 		}
 	}
 }
+*/

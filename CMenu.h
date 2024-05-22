@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 enum MENU_CHOICE
 {
 	RESUME,
@@ -18,3 +18,4 @@ public:
 	MENU_CHOICE run();
 };
 
+*/

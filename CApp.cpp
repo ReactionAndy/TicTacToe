@@ -2,7 +2,61 @@
 #include <iostream>
 #include <Windows.h>
 
-CApp::CApp() : m_pGame(NULL), m_pApp(NULL), m_isRunning(true)
+CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pGame(NULL), m_pApp(NULL)
+{
+	std::cout << "CREATING APP\n";
+}
+
+CApp::~CApp()
+{
+	std::cout << "DESTROYING APP\n";
+	delete m_pGame;
+	m_pGame = NULL;
+}
+
+void CApp::handleEvent()
+{
+	sf::Event evnt;
+	while (m_window.pollEvent(evnt))
+	{
+		switch (evnt.type)
+		{
+		case sf::Event::Closed:
+			m_window.close();
+			break;
+		case sf::Event::MouseButtonPressed:
+			m_pGame->checkMouseInput(sf::Mouse::getPosition(m_window));
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void CApp::run()
+{
+	m_pGame = new CGame(m_pApp);
+	while (m_window.isOpen())
+	{
+		handleEvent();
+		clear();
+		if (!m_pGame->isGameWon())
+			m_pGame->run();
+		else
+			restartGame();
+		display();
+	}
+}
+
+void CApp::restartGame()
+{
+	delete m_pGame;
+	m_pGame = 0;
+	m_pGame = new CGame(m_pApp);
+}
+
+
+/*CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pGame(NULL), m_pApp(NULL), m_isRunning(true)
 {
 	std::cout << "CREATING APP\n";
 }
@@ -52,4 +106,4 @@ void CApp::run()
 		}
 	}
 	system("PAUSE");
-}
+}*/
