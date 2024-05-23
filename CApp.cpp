@@ -40,10 +40,20 @@ void CApp::run()
 	{
 		handleEvent();
 		clear();
-		if (!m_pGame->isGameWon())
+		switch (m_pGame->getGameState())
+		{
+		case GAME_STATE::NONE:
 			m_pGame->run();
-		else
+			break;
+		case GAME_STATE::WIN_O:
+		case GAME_STATE::WIN_X:
+		case GAME_STATE::DRAW:
+		case GAME_STATE::PAUSE:
 			restartGame();
+			break;
+		default:
+			break;
+		}
 		display();
 	}
 }

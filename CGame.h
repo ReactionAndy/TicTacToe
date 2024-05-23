@@ -4,6 +4,15 @@
 #include "IEntity.h"
 class CApp; // Forward declaration
 
+enum GAME_STATE
+{
+	NONE,
+	WIN_X,
+	WIN_O,
+	DRAW,
+	PAUSE,
+};
+
 class CGame
 {
 public:
@@ -16,9 +25,12 @@ public:
 
 	bool isGameWon();
 
+	const GAME_STATE getGameState() const { return m_game_state; }
+
 private:
 	CApp* m_pApp;
 
+	GAME_STATE m_game_state;
 	int m_board[3][3];
 
 	std::vector<IEntity*> m_pEntities;

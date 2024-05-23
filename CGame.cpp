@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 
-CGame::CGame(CApp* pApp) : m_pApp(pApp), m_playerIsX(true), m_board{
+CGame::CGame(CApp* pApp) : m_pApp(pApp), m_playerIsX(true), m_game_state(GAME_STATE::NONE), m_board{
 	{0, 0, 0},
 	{0, 0, 0},
 	{0, 0, 0} }
@@ -54,14 +54,21 @@ void CGame::run()
 	{
 		m_pApp->draw(m_pEntities[i]->getShape());
 	}
+	isGameWon();
 }
 
 bool CGame::isGameWon()
 {
 	if (didPlayerThisWin(1))
+	{
+		m_game_state = GAME_STATE::WIN_X;
 		return true;
+	}
 	else if (didPlayerThisWin(2))
+	{
+		m_game_state = GAME_STATE::WIN_O;
 		return true;
+	}
 	return false;
 }
 
