@@ -54,6 +54,8 @@ void CGame::run()
 	{
 		m_pApp->draw(m_pEntities[i]->getShape());
 	}
+	if (isGameDraw())
+		m_game_state = GAME_STATE::DRAW;
 	isGameWon();
 }
 
@@ -190,6 +192,16 @@ bool CGame::didPlayerThisWin(int x)
 	else if (m_board[0][2] == x && m_board[1][1] == x && m_board[2][0] == x)
 		return true;
 	return false;
+}
+
+bool CGame::isGameDraw()
+{
+	for (unsigned int i = 0; i < m_pEntities.size(); i++)
+	{
+		if (m_pEntities[i]->getType() == ENTITY_TYPE::EMPTY)
+			return false;
+	}
+	return true;
 }
 
 /*#include "CGame.h"

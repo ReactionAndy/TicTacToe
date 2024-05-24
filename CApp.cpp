@@ -46,8 +46,17 @@ void CApp::run()
 			m_pGame->run();
 			break;
 		case GAME_STATE::WIN_O:
+			restartGame();
+			std::cout << "Player O Won\n";
+			break;
 		case GAME_STATE::WIN_X:
+			restartGame();
+			std::cout << "Player X Won\n";
+			break;
 		case GAME_STATE::DRAW:
+			restartGame();
+			std::cout << "No Winner Draw\n";
+			break;
 		case GAME_STATE::PAUSE:
 			restartGame();
 			break;

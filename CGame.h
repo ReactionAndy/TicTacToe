@@ -47,6 +47,7 @@ private:
 	void switchPlayer() { m_playerIsX = !m_playerIsX; }
 
 	bool didPlayerThisWin(int x);
+	bool isGameDraw();
 };
 
 /*#pragma once
