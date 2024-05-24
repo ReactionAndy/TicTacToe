@@ -2,9 +2,10 @@
 #include <iostream>
 #include <Windows.h>
 
-CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pGame(NULL), m_pApp(NULL)
+CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pGame(NULL), m_pApp(NULL), m_pGUI(NULL)
 {
 	std::cout << "CREATING APP\n";
+	m_window.setFramerateLimit(144);
 }
 
 CApp::~CApp()
