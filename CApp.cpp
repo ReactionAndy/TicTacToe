@@ -12,6 +12,9 @@ CApp::~CApp()
 	std::cout << "DESTROYING APP\n";
 	delete m_pGame;
 	m_pGame = NULL;
+
+	delete m_pGUI;
+	m_pGUI = NULL;
 }
 
 void CApp::handleEvent()
@@ -36,6 +39,10 @@ void CApp::handleEvent()
 void CApp::run()
 {
 	m_pGame = new CGame(m_pApp);
+
+	m_pGUI = new CGUI(m_pApp, sf::Vector2f(0, 0), (sf::Vector2f(400, 200))); // TEMP NUMBERS | App Pointer | Start Pos | Max Size
+	m_pGUI->createText(TEXT_TYPE::TITLE, "TITLE", sf::Vector2f(0, 0));
+	m_pGUI->createText(TEXT_TYPE::NORMAL, "NORMAL", sf::Vector2f(0, 50));
 	while (m_window.isOpen())
 	{
 		handleEvent();
@@ -63,6 +70,7 @@ void CApp::run()
 		default:
 			break;
 		}
+		m_pGUI->draw();
 		display();
 	}
 }
