@@ -9,14 +9,18 @@ class IText
 protected:
 	sf::Text m_text;
 	sf::Font m_font;
+	sf::RectangleShape m_rect;
+	sf::Vector2f m_originalPos;
 public:
 	virtual ~IText();
 
-	virtual sf::Text getText() { return m_text; }
+	virtual const sf::Text getText() const { return m_text; }
+	virtual const sf::RectangleShape getRect() const { return m_rect; }
 
 	virtual void setFont(std::string fontName);
-	virtual void setText(std::string txt) { m_text.setString(txt); }
-	virtual void setPos(sf::Vector2f pos) { m_text.setPosition(pos); }
+	virtual void setText(std::string txt);
+	virtual void setPos(sf::Vector2f pos);
+	virtual void setCharacterSize(float size);
 private:
 };
 
@@ -51,7 +55,7 @@ public:
 	~CGUI();
 	void draw();
 
-	void createText(TEXT_TYPE type, std::string text, sf::Vector2f pos);
+	void createText(TEXT_TYPE type, std::string text, sf::Vector2f pos, float charSize);
 private:
 	sf::RectangleShape m_shape;
 	CApp* m_pApp;
@@ -59,6 +63,6 @@ private:
 
 	sf::Vector2f m_pos, m_size;
 
-	bool isOutsideScope(sf::Text text);
+	bool isOutofScope(sf::Vector2f pos);
 };
 

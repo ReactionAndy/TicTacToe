@@ -5,7 +5,7 @@
 CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pGame(NULL), m_pApp(NULL), m_pGUI(NULL)
 {
 	std::cout << "CREATING APP\n";
-	m_window.setFramerateLimit(144);
+	m_window.setVerticalSyncEnabled(true);
 }
 
 CApp::~CApp()
@@ -42,8 +42,9 @@ void CApp::run()
 	m_pGame = new CGame(m_pApp);
 
 	m_pGUI = new CGUI(m_pApp, sf::Vector2f(0, 0), (sf::Vector2f(400, 200))); // TEMP NUMBERS | App Pointer | Start Pos | Max Size
-	m_pGUI->createText(TEXT_TYPE::TITLE, "TITLE", sf::Vector2f(0, 0));
-	m_pGUI->createText(TEXT_TYPE::NORMAL, "NORMAL", sf::Vector2f(0, 50));
+	m_pGUI->createText(TEXT_TYPE::TITLE, "GUI", sf::Vector2f(0, 0), 36);
+	m_pGUI->createText(TEXT_TYPE::NORMAL, "Debug", sf::Vector2f(0, 50), 24);
+	m_pGUI->createText(TEXT_TYPE::NORMAL, "Forsen", sf::Vector2f(300, 175), 24);
 	while (m_window.isOpen())
 	{
 		handleEvent();

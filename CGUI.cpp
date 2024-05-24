@@ -24,14 +24,12 @@ void CGUI::draw()
 	m_pApp->draw(m_shape);
 	for (unsigned int i = 0; i < m_texts.size(); i++)
 	{
-		if (!isOutsideScope(m_texts[i]->getText()))
-		{
-			m_pApp->draw(m_texts[i]->getText());
-		}
+		m_pApp->draw(m_texts[i]->getText());
+		m_pApp->draw(m_texts[i]->getRect());
 	}
 }
 
-void CGUI::createText(TEXT_TYPE type, std::string text, sf::Vector2f pos)
+void CGUI::createText(TEXT_TYPE type, std::string text, sf::Vector2f pos, float charSize)
 {
 	IText* p = NULL;
 	switch (type)
@@ -48,8 +46,17 @@ void CGUI::createText(TEXT_TYPE type, std::string text, sf::Vector2f pos)
 	if (p)
 	{
 		p->setFont("SANTELLO.ttf");
+		p->setCharacterSize(charSize);
 		p->setText(text);
 		p->setPos(sf::Vector2f(pos.x + m_pos.x, pos.y + m_pos.y));
+
+		if (isOutofScope(sf::Vector2f(p->getRect().getPosition().x + p->getRect().getSize().x, pos.y + (charSize))))
+		{
+			std::cout << "TEXT IS OUTOFSCOPE";
+			delete p;
+			p = 0;
+			return;
+		}
 		m_texts.push_back(p);
 	}
 	else
@@ -60,11 +67,11 @@ void CGUI::createText(TEXT_TYPE type, std::string text, sf::Vector2f pos)
 	}
 }
 
-bool CGUI::isOutsideScope(sf::Text text)
+bool CGUI::isOutofScope(sf::Vector2f pos)
 {
-	if (text.getPosition().x > m_pos.x + m_size.x)
+	if (pos.x >= m_pos.x + m_size.x)
 		return true;
-	else if (text.getPosition().y > m_pos.x + m_size.y)
+	else if (pos.y >= m_pos.y + m_size.y)
 		return true;
 	return false;
 }
@@ -84,14 +91,36 @@ void IText::setFont(std::string fontName = "SANTELLO.ttf")
 	m_text.setFont(m_font);
 }
 
+void IText::setText(std::string txt)
+{
+	m_text.setString(txt);
+
+	m_rect.setSize(sf::Vector2f(m_text.getGlobalBounds().width, m_text.getGlobalBounds().height));
+}
+
+void IText::setPos(sf::Vector2f pos)
+{
+	m_text.setPosition(pos);
+	m_originalPos = pos;
+	m_rect.setPosition(sf::Vector2f(pos.x, pos.y + (m_text.getCharacterSize() - m_text.getGlobalBounds().getSize().y + 1)));
+}
+
+void IText::setCharacterSize(float size)
+{
+	m_text.setCharacterSize(size);
+}
+
 CTitle::CTitle()
 {
 	std::cout << "CTitle Created\n";
-	m_text.setCharacterSize(36);
 	m_text.setStyle(sf::Text::Bold);
 	m_text.setFillColor(sf::Color::White);
 	m_text.setOutlineColor(sf::Color::Black);
 	m_text.setOutlineThickness(1);
+
+	m_rect.setFillColor(sf::Color::Transparent);
+	m_rect.setOutlineColor(sf::Color::Green);
+	m_rect.setOutlineThickness(1);
 }
 
 CTitle::~CTitle()
@@ -102,10 +131,13 @@ CTitle::~CTitle()
 CText::CText()
 {
 	std::cout << "CText Created\n";
-	m_text.setCharacterSize(24);
 	m_text.setFillColor(sf::Color::White);
 	m_text.setOutlineColor(sf::Color::Black);
 	m_text.setOutlineThickness(1);
+
+	m_rect.setFillColor(sf::Color::Transparent);
+	m_rect.setOutlineColor(sf::Color::Green);
+	m_rect.setOutlineThickness(1);
 }
 
 CText::~CText()

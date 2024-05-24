@@ -99,7 +99,6 @@ IEntity* CGame::createEntity(const ENTITY_TYPE Entity_Type, const sf::Vector2f p
 		break;
 	}
 
-
 	return entity;
 }
 

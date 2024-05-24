@@ -1,7 +1,10 @@
 ﻿  CApp.cpp
+  CGUI.cpp
+  CGame.cpp
+  main.cpp
   Generating code
-  2 of 337 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  13 of 337 functions ( 3.9%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   TicTacToe.vcxproj -> E:\Programming\Programming\Projects\Github Projects\TicTacToe\x64\Release\TicTacToe.exe
