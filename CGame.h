@@ -33,9 +33,9 @@ private:
 	GAME_STATE m_game_state;
 	int m_board[3][3];
 
-	std::vector<IEntity*> m_pEntities;
+	std::vector<std::shared_ptr<IEntity>> m_pEntities;
 
-	IEntity* createEntity(const ENTITY_TYPE Entity_Type, const sf::Vector2f pos, const sf::Vector2f size);
+	std::shared_ptr<IEntity> createEntity(const ENTITY_TYPE Entity_Type, const sf::Vector2f pos, const sf::Vector2f size);
 
 	int isBoxClicked(sf::Vector2i mouse_pos);
 	bool isBoxTaken(int index);

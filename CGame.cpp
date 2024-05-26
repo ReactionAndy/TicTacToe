@@ -7,6 +7,7 @@ CGame::CGame(CApp* pApp) : m_pApp(pApp), m_playerIsX(true), m_game_state(GAME_ST
 	{0, 0, 0},
 	{0, 0, 0} }
 {
+	std::cout << "Creating Game\n";
 	m_pEntities.push_back(createEntity(ENTITY_TYPE::EMPTY, sf::Vector2f(100, 100), sf::Vector2f(50, 50)));
 	m_pEntities.push_back(createEntity(ENTITY_TYPE::EMPTY, sf::Vector2f(200, 100), sf::Vector2f(50, 50)));
 	m_pEntities.push_back(createEntity(ENTITY_TYPE::EMPTY, sf::Vector2f(300, 100), sf::Vector2f(50, 50)));
@@ -23,11 +24,11 @@ CGame::CGame(CApp* pApp) : m_pApp(pApp), m_playerIsX(true), m_game_state(GAME_ST
 
 CGame::~CGame()
 {
+	std::cout << "Destroying Game\n";
 	for (unsigned int i = 0; i < m_pEntities.size(); i++)
 	{
 		std::cout << "index: " << i << ": ";
-		delete m_pEntities[i];
-		m_pEntities[i] = 0;
+		m_pEntities[i].reset();
 	}
 	m_pEntities.clear();
 }
@@ -74,29 +75,29 @@ bool CGame::isGameWon()
 	return false;
 }
 
-IEntity* CGame::createEntity(const ENTITY_TYPE Entity_Type, const sf::Vector2f pos, const sf::Vector2f size)
+std::shared_ptr<IEntity> CGame::createEntity(const ENTITY_TYPE Entity_Type, const sf::Vector2f pos, const sf::Vector2f size)
 {
-	IEntity* entity = NULL;
+	std::shared_ptr<IEntity> entity = NULL;
 
 	switch (Entity_Type)
 	{
 	case EMPTY:
-		entity = new CEmpty();
-		entity->getShape().setPosition(pos);
-		entity->getShape().setSize(size);
+		entity = std::make_shared<CEmpty>();
 		break;
 	case CROSS:
-		entity = new CCross();
-		entity->getShape().setPosition(pos);
-		entity->getShape().setSize(size);
+		entity = std::make_shared<CCross>();
 		break;
 	case CIRCLE:
-		entity = new CCircle();
-		entity->getShape().setPosition(pos);
-		entity->getShape().setSize(size);
+		entity = std::make_shared<CCircle>();
 		break;
 	default:
 		break;
+	}
+
+	if (entity)
+	{
+		entity->getShape().setPosition(pos);
+		entity->getShape().setSize(size);
 	}
 
 	return entity;
@@ -167,8 +168,7 @@ void CGame::switchBox(int index)
 
 void CGame::destroyLastElement()
 {
-	delete m_pEntities[m_pEntities.size() - 1];
-	m_pEntities[m_pEntities.size() - 1] = 0;
+	m_pEntities[m_pEntities.size() - 1].reset();
 	m_pEntities.pop_back();
 }
 

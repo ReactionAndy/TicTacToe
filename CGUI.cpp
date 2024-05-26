@@ -29,7 +29,7 @@ void CGUI::draw()
 	}
 }
 
-void CGUI::createText(TEXT_TYPE type, std::string text, sf::Vector2f pos, float charSize)
+void CGUI::createText(TEXT_TYPE type, std::string text, sf::Vector2f pos, unsigned int charSize)
 {
 	IText* p = NULL;
 	switch (type)
@@ -105,7 +105,7 @@ void IText::setPos(sf::Vector2f pos)
 	m_rect.setPosition(sf::Vector2f(pos.x, pos.y + (m_text.getCharacterSize() - m_text.getGlobalBounds().getSize().y + 1)));
 }
 
-void IText::setCharacterSize(float size)
+void IText::setCharacterSize(unsigned int size)
 {
 	m_text.setCharacterSize(size);
 }

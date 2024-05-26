@@ -2,7 +2,7 @@
 #include <iostream>
 #include <Windows.h>
 
-CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pGame(NULL), m_pApp(NULL), m_pGUI(NULL)
+CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pApp(NULL)
 {
 	std::cout << "CREATING APP\n";
 	m_window.setVerticalSyncEnabled(true);
@@ -11,11 +11,6 @@ CApp::CApp() : m_window(sf::VideoMode(800, 600), "TicTacToe"), m_pGame(NULL), m_
 CApp::~CApp()
 {
 	std::cout << "DESTROYING APP\n";
-	delete m_pGame;
-	m_pGame = NULL;
-
-	delete m_pGUI;
-	m_pGUI = NULL;
 }
 
 void CApp::handleEvent()
@@ -39,9 +34,10 @@ void CApp::handleEvent()
 
 void CApp::run()
 {
-	m_pGame = new CGame(m_pApp);
+	m_pGame = std::make_shared<CGame>(m_pApp);
 
-	m_pGUI = new CGUI(m_pApp, sf::Vector2f(0, 0), (sf::Vector2f(400, 200))); // TEMP NUMBERS | App Pointer | Start Pos | Max Size
+	m_pGUI = std::make_unique<CGUI>(m_pApp, sf::Vector2f(0, 0), (sf::Vector2f(400, 200))); // TEMP NUMBERS | App Pointer | Start Pos | Max Size
+
 	m_pGUI->createText(TEXT_TYPE::TITLE, "GUI", sf::Vector2f(0, 0), 36);
 	m_pGUI->createText(TEXT_TYPE::NORMAL, "Debug", sf::Vector2f(0, 50), 24);
 	m_pGUI->createText(TEXT_TYPE::NORMAL, "Forsen", sf::Vector2f(300, 175), 24);
@@ -79,9 +75,8 @@ void CApp::run()
 
 void CApp::restartGame()
 {
-	delete m_pGame;
-	m_pGame = 0;
-	m_pGame = new CGame(m_pApp);
+	m_pGame.reset();
+	m_pGame = std::make_unique<CGame>(m_pApp);
 }
 
 

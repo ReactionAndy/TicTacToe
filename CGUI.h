@@ -2,7 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include "CApp.h"
 #include <vector>
+#include <functional>
 class CApp;
+class CGame;
 
 class IText
 {
@@ -20,7 +22,7 @@ public:
 	virtual void setFont(std::string fontName);
 	virtual void setText(std::string txt);
 	virtual void setPos(sf::Vector2f pos);
-	virtual void setCharacterSize(float size);
+	virtual void setCharacterSize(unsigned int size);
 private:
 };
 
@@ -55,10 +57,11 @@ public:
 	~CGUI();
 	void draw();
 
-	void createText(TEXT_TYPE type, std::string text, sf::Vector2f pos, float charSize);
+	void createText(TEXT_TYPE type, std::string text, sf::Vector2f pos, unsigned int charSize);
 private:
 	sf::RectangleShape m_shape;
 	CApp* m_pApp;
+	CGame* m_pGame;
 	std::vector<IText*> m_texts;
 
 	sf::Vector2f m_pos, m_size;

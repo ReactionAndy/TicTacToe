@@ -12,7 +12,8 @@ public:
 	CApp();
 	~CApp();
 
-	void passApp(CApp& app) { m_pApp = &app; }
+	void passApp(CApp* app) { m_pApp = app; }
+	std::shared_ptr<CGame> getGame() { return m_pGame; }
 
 	void handleEvent();
 	void run();
@@ -25,9 +26,9 @@ public:
 private:
 	sf::RenderWindow m_window;
 	CApp* m_pApp;
-	CGame* m_pGame;
+	std::shared_ptr<CGame> m_pGame;
 
-	CGUI* m_pGUI;
+	std::unique_ptr<CGUI> m_pGUI;
 
 	void restartGame();
 };
